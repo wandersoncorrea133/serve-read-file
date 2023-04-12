@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
 import { Router, Request, Response } from "express";
+import "dotenv/config"
 import fetch from "node-fetch";
 import { parse } from "csv-parse";
 import { Readable } from "stream";
@@ -71,9 +72,9 @@ router.post(
                 headers: {
                   accept: "application/json",
                   "content-type": "application/json",
-                  "X-VTEX-API-AppKey": "vtexappkey-lojalivreeleve-BWEZIL",
+                  "X-VTEX-API-AppKey": process.env.VTEX_APPKEY ? process.env.VTEX_APPKEY : '',
                   "X-VTEX-API-AppToken":
-                    "DINGUNPGXFBWCDJKFJTUJXVTIBBOBAOEVIPUYJUDTGLERRFWRJAELANGNUYTLAEWRXAUOPLWOQADLQBQVFXSAJTVUIGEKBRTBONURLICXDQVAKUWSHYGCLWIEFAFIHLM",
+                    process.env.VTEX_APPTOKEN ? process.env.VTEX_APPTOKEN : '',
                 },
                 body: JSON.stringify([
                   {
@@ -103,45 +104,6 @@ router.post(
     });
 
     const reviews = await data;
-
-    // reviews.forEach(async (item) => {
-
-    //   try {
-    //     const url =
-    //       "https://www.livreeleve.com.br/reviews-and-ratings/api/reviews";
-    //     const options = {
-    //       method: "POST",
-    //       headers: {
-    //         accept: "application/json",
-    //         "content-type": "application/json",
-    //         "X-VTEX-API-AppKey": "vtexappkey-lojalivreeleve-BWEZIL",
-    //         "X-VTEX-API-AppToken":
-    //           "DINGUNPGXFBWCDJKFJTUJXVTIBBOBAOEVIPUYJUDTGLERRFWRJAELANGNUYTLAEWRXAUOPLWOQADLQBQVFXSAJTVUIGEKBRTBONURLICXDQVAKUWSHYGCLWIEFAFIHLM",
-    //       },
-    //       body: JSON.stringify([
-    //         {
-    //           productId: item.productId,
-    //           title: item.title,
-    //           text: item.text,
-    //           rating: item.rating,
-    //           reviewerName: item.reviewerName,
-    //           shopperId: item.shopperId,
-    //           reviewDateTime: item.reviewDateTime,
-    //           verifiedPurchaser: true,
-    //           approved: true,
-    //         },
-    //       ]),
-    //     };
-    //     const response = await fetch(url, options);
-    //     const data = await response.json();
-
-    //     console.log(data);
-    //   } catch (error) {
-    //     return response.status(400).send({
-    //       message: error,
-    //     });
-    //   }
-    // });
 
     return response.json(reviews);
   }
